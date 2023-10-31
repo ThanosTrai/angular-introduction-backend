@@ -17,7 +17,7 @@ export class User {
     @Prop({type: String, required: true})
     address: string;
     @Prop({type: String, default: ''})
-    photoUrl: string;
+    photoURL: string;
 }
 
 export type UserDocument = HydratedDocument<User>;

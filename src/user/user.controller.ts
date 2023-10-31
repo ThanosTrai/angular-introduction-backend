@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
+import { UserDto } from './user.dto';
 
 @Controller('users')
 export class UserController {
     constructor(private userService: UserService) {}
+
+    // GET endpoints
 
     @Get()
     async findAllUsers() {
@@ -21,5 +24,15 @@ export class UserController {
         return await this.userService.findUserByEmail(email)
     }
 
-    // @Get('email/:email/address/:address')
+    // POST endpoints
+
+    @Post()
+    async createUser(@Body(new ValidationPipe()) user: UserDto) {
+        return await this.userService.createUser(user);
+    }
+
+    @Post('bulk')
+    async createUsers(@Body(new ValidationPipe()) users: UserDto[]) {
+        return await this.userService.createUsers(users);
+    }
 }
